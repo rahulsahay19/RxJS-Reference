@@ -25,13 +25,21 @@ export class HomeComponent implements OnInit {
 
       const courses$: Observable<Course[]> = http$
           .pipe(
+              //Moved catch error block above to avoid multiple logging in console, since multiple
+              //subscription is happening from sharereplay.
+            catchError(err => {
+                console.log('Error Occured', err);
+                return throwError(err);
+
+              }),
+              //For the same reason finalize also moved above
+              finalize(() => {
+                console.log('Finalize executed');
+            }),
               tap(() => console.log("HTTP request executed")),
               map(res => Object.values(res["payload"]) ),
               shareReplay(),
-              //Each time when there is an error, it will wait for 2sec, before emitting value back.
-              retryWhen(errors => errors.pipe(
-                  delayWhen(() => timer(2000))
-              ))
+              
             );
 
       this.beginnerCourses$ = courses$

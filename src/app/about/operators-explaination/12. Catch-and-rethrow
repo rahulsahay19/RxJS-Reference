@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from "../model/course";
 import {interval, Observable, of, timer, noop, throwError} from 'rxjs';
-import {catchError, delayWhen, map, retryWhen, shareReplay, tap, finalize} from 'rxjs/operators';
+import {catchError, delayWhen, map, retryWhen, shareReplay, tap} from 'rxjs/operators';
 import { createHttpObservable } from '../common/util';
 
 
@@ -28,11 +28,15 @@ export class HomeComponent implements OnInit {
               tap(() => console.log("HTTP request executed")),
               map(res => Object.values(res["payload"]) ),
               shareReplay(),
-              //Each time when there is an error, it will wait for 2sec, before emitting value back.
-              retryWhen(errors => errors.pipe(
-                  delayWhen(() => timer(2000))
-              ))
-            );
+              //This is the replacement observable where in when fetch api fails,
+              //then only one record will be returned. This way page won't break.
+              //Its like fetching values from offline db
+              catchError(err => {
+                console.log('Error Occured', err);
+                return throwError(err);
+
+              })
+          );
 
       this.beginnerCourses$ = courses$
           .pipe(
