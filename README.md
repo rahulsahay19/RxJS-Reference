@@ -1,11 +1,9 @@
 
-## The RxJs In Practice Course
-
-This repository contains the code of the [RxJs In Practice Course](https://angular-university.io/course/rxjs-course).
+## The RxJs References
 
 This course repository is updated to Angular v6, and there is a  package-lock.json file available, for avoiding semantic versioning installation issues.
 
-![RxJs In Practice Course](https://s3-us-west-1.amazonaws.com/angular-university/course-images/rxjs-in-practice-course.png)
+![RxJs In Practice Course](https://user-images.githubusercontent.com/3886381/58416722-26778300-80a0-11e9-8e6f-b32f12730c3e.png)
 
 
 # Installation pre-requisites
@@ -15,11 +13,6 @@ IMPORTANT: Please use the latest Node and especially NPM, to make sure the packa
 For running this project we need and npm installed on our machine. These are some tutorials to install node in different operating systems:
 
 *Its important to install the latest version of Node*
-
-- [Install Node and NPM on Windows](https://www.youtube.com/watch?v=8ODS6RM6x7g)
-- [Install Node and NPM on Linux](https://www.youtube.com/watch?v=yUdHk-Dk_BY)
-- [Install Node and NPM on Mac](https://www.youtube.com/watch?v=Imj8PgG3bZU)
-
 
 # Installing the Angular CLI
 
@@ -32,7 +25,7 @@ With the following command the angular-cli will be installed globally in your ma
 
 We can install the master branch using the following commands:
 
-    git clone https://github.com/angular-university/rxjs-course.git
+    git clone https://github.com/rahulsahay19/RxJS-Reference.git
     
 This repository is made of several separate npm modules, that are installable separately. For example, to run the au-input module, we can do the following:
     
@@ -64,20 +57,4 @@ To run the frontend part of our code, we will use the Angular CLI:
 The application is visible at port 4200: [http://localhost:4200](http://localhost:4200)
 
 
-
-# Important 
-
-This repository has multiple branches, have a look at the beginning of each section to see the name of the branch.
-
-At certain points along the course, you will be asked to checkout other remote branches other than master. You can view all branches that you have available remotely using the following command:
-
-    git branch -a
-
-  The remote branches have their starting in origin, such as for example 1-navigation-and-containers.
-
-We can checkout the remote branch and start tracking it with a local branch that has the same name, by using the following command:
-
-      git checkout -b section-1 origin/1-navigation-and-containers
-
-It's also possible to download a ZIP file for a given branch,  using the branch dropdown on this page on the top left, and then selecting the Clone or Download / Download as ZIP button.
 
