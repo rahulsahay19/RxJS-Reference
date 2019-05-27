@@ -1,0 +1,59 @@
+import {Component, OnInit} from '@angular/core';
+import {Course} from "../model/course";
+import {interval, Observable, of, timer, noop} from 'rxjs';
+import {catchError, delayWhen, map, retryWhen, shareReplay, tap} from 'rxjs/operators';
+import { createHttpObservable } from '../common/util';
+
+
+@Component({
+    selector: 'home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+    
+    beginnerCourses: Course[];
+    advancedCourses: Course[];
+
+    constructor() {
+
+    }
+
+    ngOnInit() {
+
+        //When an observable gets defined, it doesn't trigger any request
+   //however, once subscribed then only it will trigger request.
+   //Creating custom observable. Observer will emit the new value of the stream
+   //calling next, or error or complete. Observer is internally used to implement 
+   //the observer.
+      const http$ = createHttpObservable('/api/courses');
+      //whenever, we are going to derive new observable from existing observable,
+      //we need to use pipe operator. using map op, we are trannsforming the same
+      //in array of courses
+
+      const courses$ = http$
+                       .pipe(
+                         map(res => Object.values(res["payload"]))
+                       );
+
+//    http$.subscribe(
+//      courses => console.log(courses),
+//      noop, //basically means no operation
+//      () => console.log('completed')
+//    );
+//This works completely fine with simple apps. However, with complex apps, it doesn't scale nicely.
+//will endup with nested subscriptions.
+   courses$.subscribe(
+     courses => {
+         this.beginnerCourses = courses.filter(course => course.category === 'BEGINNER');
+         this.advancedCourses = courses.filter(course => course.category === 'ADVANCED');
+     },
+     noop,
+     () => console.log('courses fetched')
+   );
+
+
+
+    }
+
+}
