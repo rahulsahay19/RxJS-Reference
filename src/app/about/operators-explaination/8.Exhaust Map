@@ -63,9 +63,13 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
        //Exhaust Map makes sure same value shouldn't go down the line.
+       //exhaustMap makes sure that repeated stream of clicks won't happen.
+       //This will take only one click in the stream of events.
+       //fromEvent will capture the button click and turn into observable
+       //so that we can subscribe to click stream here
         fromEvent(this.saveButton.nativeElement, 'click')
                  .pipe(
-                     exhaustMap(() => this.saveCourse(this.form.value))
+                 exhaustMap(() => this.saveCourse(this.form.value))
                  ).subscribe();
 
     }

@@ -40,8 +40,11 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     ngOnInit() {
        //Concat is all about completeion. Waiting for one observable to complete
        //before subscribing and using next observable. This way sequence can be maintained
-        this.form.valueChanges
+       // this.form.valueChanges. ConcatMap is taking the values from value changes, creating
+       // new observable subscribing to them and concatinating them together
+            this.form.valueChanges
             .pipe(
+                //First this checks whether form is valid or not
                 filter(() => this.form.valid),
             concatMap(changes => this.saveCourse(changes))
             )

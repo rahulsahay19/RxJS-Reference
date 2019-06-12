@@ -61,7 +61,8 @@ export class CourseComponent implements OnInit, AfterViewInit {
                 
     }
 
-    //switch map is all about unsubcription logic. let's say you want to cancel http request.
+    //switch map operators are very commonly used with search functionality. Here, typeahead box
+    //is aleardy there.
     loadLessons(search = '') : Observable<Lesson[]> {
        return createHttpObservable(`api/lessons?courseId=${this.courseId}&pageSize=100&filter=${search}`)
                          .pipe(
